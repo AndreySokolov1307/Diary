@@ -1,0 +1,26 @@
+PODS:
+  - CalendarKit (1.1.9)
+  - Realm (10.45.3):
+    - Realm/Headers (= 10.45.3)
+  - Realm/Headers (10.45.3)
+  - RealmSwift (10.45.3):
+    - Realm (= 10.45.3)
+
+DEPENDENCIES:
+  - CalendarKit
+  - RealmSwift
+
+SPEC REPOS:
+  trunk:
+    - CalendarKit
+    - Realm
+    - RealmSwift
+
+SPEC CHECKSUMS:
+  CalendarKit: 0c19eabfc09a6d2b32d2e7fe392e2fe5996622af
+  Realm: b277b843c7505c1e30e3a70322a24a09283e62bb
+  RealmSwift: f6690053e81733801e6619eb5b39993ab76f7050
+
+PODFILE CHECKSUM: 1cc89096698cb545b26e396f6d706bd95cb66a8b
+
+COCOAPODS: 1.14.3
