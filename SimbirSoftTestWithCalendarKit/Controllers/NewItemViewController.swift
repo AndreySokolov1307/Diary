@@ -8,15 +8,13 @@
 import Foundation
 import UIKit
 import RealmSwift
+import CalendarKit
 
 protocol NewItemViewControllerDelegate: AnyObject {
     func deleteButtonTapped(_ vc: NewItemViewController)
 }
 
 class NewItemViewController: UIViewController {
-    //try
-    weak var activeTextView: UITextView?
-    
     private var newItemView: NewItemView!
     private var toDoItem: ToDoItem?
     
@@ -64,13 +62,7 @@ class NewItemViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isEnabled = false
         }
         
-        let backButton = UIButton()
-        backButton.setTitle("Back", for: .normal)
-        backButton.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        backButton.setTitleColor(.systemBlue, for: .normal)
-    
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(didTapCancelButton))
     }
     
     @objc func didTapSaveButton() {
@@ -141,7 +133,7 @@ class NewItemViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    @objc func didTapBackButton() {
+    @objc func didTapCancelButton() {
         self.dismiss(animated: true)
     }
     
@@ -206,7 +198,6 @@ class NewItemViewController: UIViewController {
 //MARK: - UITableViewDataSource
 
 extension NewItemViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         if let _ = toDoItem {
             return 4
@@ -243,6 +234,7 @@ extension NewItemViewController: UITableViewDataSource {
             cell.textField.addTarget(self, action: #selector(textFieldDidChange(_: )), for: .editingChanged)
             if let item = toDoItem {
                 cell.textField.text = item.name
+                cell.textField.clearButtonMode = .always
             }
             cell.contentView.isUserInteractionEnabled = false
             cell.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
@@ -276,6 +268,7 @@ extension NewItemViewController: UITableViewDataSource {
                 } else {
                     cell.segmentControl.selectedSegmentIndex = 1
                 }
+                
                 cell.contentView.isUserInteractionEnabled = false
                     
                 return cell
@@ -339,7 +332,7 @@ extension NewItemViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
+
     @objc func textFieldDidChange(_ sender: UITextField) {
         if let text = sender.text,
            text != "" {
@@ -374,7 +367,6 @@ extension NewItemViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension NewItemViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
     }
@@ -383,7 +375,6 @@ extension NewItemViewController: UITableViewDelegate {
 //MARK: - UITextFieldDelegate
 
 extension NewItemViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

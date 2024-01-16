@@ -7,13 +7,14 @@
 
 import Foundation
 import UIKit
+import CalendarKit
 
 class NewItemView: UIView {
     
     var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .systemGroupedBackground
+        tableView.backgroundColor = SystemColors.secondarySystemBackground
         return tableView
     }()
     

@@ -14,7 +14,6 @@ protocol DetailItemViewControllerDelegate: AnyObject {
 }
 
 class DetailItemViewController: UIViewController {
-
     var detailItemView: DetailItemView!
     
     var notificationToken: NotificationToken?
@@ -80,7 +79,6 @@ class DetailItemViewController: UIViewController {
             self?.navigationController?.popViewController(animated: true)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.view.tintColor = .systemRed
         self.present(alert, animated: true)
     }
     
@@ -107,7 +105,6 @@ class DetailItemViewController: UIViewController {
 //MARK: - UITableViewDataSource
 
 extension DetailItemViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let note = toDoItem.note,
            !note.isEmpty {
@@ -124,6 +121,7 @@ extension DetailItemViewController: UITableViewDataSource {
             cell.label.textColor = .black
             cell.label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
             cell.label.numberOfLines = 0
+            cell.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
             
             return cell
         }
@@ -133,6 +131,7 @@ extension DetailItemViewController: UITableViewDataSource {
             cell.label.font = UIFont.systemFont(ofSize: 15)
             cell.label.numberOfLines = 0
             cell.label.attributedText = configureFormattedAttributedText(isAllDay: toDoItem.isAllDay)
+            
             return cell
         }
         

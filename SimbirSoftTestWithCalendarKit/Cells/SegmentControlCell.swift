@@ -30,30 +30,14 @@ class SegmentContolCell: UITableViewCell {
     
     let segmentControl: UISegmentedControl = {
         let segmentConttol = UISegmentedControl()
-        
-        let sizeConfig = UIImage.SymbolConfiguration(pointSize: 16,
-                                                     weight: UIImage.SymbolWeight.bold,
-                                                     scale: UIImage.SymbolScale.medium)
-        let arrowImage = UIImage(systemName: "arrow.down",
-                                 withConfiguration: sizeConfig)?.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
-
-        let sizeConfig2 = UIImage.SymbolConfiguration(pointSize: 16,
-                                                      weight: UIImage.SymbolWeight.bold,
-                                                      scale: UIImage.SymbolScale.medium)
-        let exclamationImage = UIImage(systemName: "exclamationmark.2",
-                                       withConfiguration: sizeConfig2)?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-        
-        
-        
-        
-        
-        segmentConttol.insertSegment(with: arrowImage,
+    
+        segmentConttol.insertSegment(withTitle: Importance.low.rawValue ,
                                      at: 0,
                                      animated: true)
-        segmentConttol.insertSegment(withTitle: "no",
+        segmentConttol.insertSegment(withTitle: Importance.normal.rawValue,
                                      at: 1,
                                      animated: true)
-        segmentConttol.insertSegment(with: exclamationImage,
+        segmentConttol.insertSegment(withTitle: Importance.hight.rawValue,
                                      at: 2,
                                      animated: true)
         segmentConttol.translatesAutoresizingMaskIntoConstraints = false

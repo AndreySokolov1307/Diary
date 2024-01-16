@@ -95,6 +95,7 @@
 		3229D13D2B4ED6F00074624C /* SimbirSoftTestWithCalendarKit */ = {
 			isa = PBXGroup;
 			children = (
+				32338C0F2B569E3E0035FE05 /* Resources */,
 				3229D1542B4EFD3E0074624C /* Application */,
 				3229D1522B4EFD2D0074624C /* Models */,
 				325CB1882B50299B007A1E4A /* Views */,
@@ -102,9 +103,6 @@
 				325CB18D2B506E62007A1E4A /* Cells */,
 				325CB1922B507020007A1E4A /* SupplementaryViews */,
 				325CB1872B50297B007A1E4A /* Extensions */,
-				3229D1472B4ED6F40074624C /* Assets.xcassets */,
-				3229D1492B4ED6F40074624C /* LaunchScreen.storyboard */,
-				3229D14C2B4ED6F40074624C /* Info.plist */,
 			);
 			path = SimbirSoftTestWithCalendarKit;
 			sourceTree = "<group>";
@@ -136,6 +134,16 @@
 				3229D1402B4ED6F00074624C /* SceneDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		32338C0F2B569E3E0035FE05 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3229D1472B4ED6F40074624C /* Assets.xcassets */,
+				3229D1492B4ED6F40074624C /* LaunchScreen.storyboard */,
+				3229D14C2B4ED6F40074624C /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		325CB1872B50297B007A1E4A /* Extensions */ = {
@@ -470,13 +478,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4A3Z74ZVFC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SimbirSoftTestWithCalendarKit/Info.plist;
+				INFOPLIST_FILE = SimbirSoftTestWithCalendarKit/Resources/Info.plist;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "The app needs access to the calendar to display events";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -503,13 +511,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4A3Z74ZVFC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SimbirSoftTestWithCalendarKit/Info.plist;
+				INFOPLIST_FILE = SimbirSoftTestWithCalendarKit/Resources/Info.plist;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "The app needs access to the calendar to display events";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

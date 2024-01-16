@@ -12,21 +12,23 @@ import EventKit
 import EventKitUI
 
 class CalendarViewController: DayViewController {
-    
-    private let realmStoreChanged = Notification.Name("realmStoreChanged")
-    
     private var notificationToken: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavController()
-        subscribeToNotifications()
         dayView.autoScrollToFirstEvent = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(true, animated: true)
+        subscribeToNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        notificationToken?.invalidate()
     }
     
     private func setupNavController() {
@@ -65,7 +67,6 @@ class CalendarViewController: DayViewController {
         let startDate = date
         var oneDayComponents = DateComponents()
         oneDayComponents.day = 1
-        // By adding one full `day` to the `startDate`, we're getting to the 00:00:00 of the *next* day
         let endDate = calendar.date(byAdding: oneDayComponents, to: startDate)!
         let dateInterval = DateInterval(start: startDate, end: endDate)
         let filtredEvents = events.filter { event in

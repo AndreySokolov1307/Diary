@@ -7,13 +7,14 @@
 
 import Foundation
 import UIKit
+import CalendarKit
 
 class DetailItemView: UIView {
     
     var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = SystemColors.systemBackground
         return tableView
     }()
     
