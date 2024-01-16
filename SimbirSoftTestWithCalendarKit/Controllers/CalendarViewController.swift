@@ -25,12 +25,7 @@ class CalendarViewController: DayViewController {
         navigationController?.setToolbarHidden(true, animated: true)
         subscribeToNotifications()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        notificationToken?.invalidate()
-    }
-    
+  
     private func setupNavController() {
         title = "Calendar"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add event", style: .plain, target: self, action: #selector(didTapAddNewEventButton))

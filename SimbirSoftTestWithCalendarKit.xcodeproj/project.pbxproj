@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3229D13F2B4ED6F00074624C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D13E2B4ED6F00074624C /* AppDelegate.swift */; };
-		3229D1412B4ED6F00074624C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D1402B4ED6F00074624C /* SceneDelegate.swift */; };
 		3229D1432B4ED6F00074624C /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D1422B4ED6F00074624C /* CalendarViewController.swift */; };
 		3229D1482B4ED6F40074624C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3229D1472B4ED6F40074624C /* Assets.xcassets */; };
 		3229D14B2B4ED6F40074624C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3229D1492B4ED6F40074624C /* LaunchScreen.storyboard */; };
@@ -35,7 +34,6 @@
 /* Begin PBXFileReference section */
 		3229D13B2B4ED6F00074624C /* SimbirSoftTestWithCalendarKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimbirSoftTestWithCalendarKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3229D13E2B4ED6F00074624C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3229D1402B4ED6F00074624C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3229D1422B4ED6F00074624C /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		3229D1472B4ED6F40074624C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3229D14A2B4ED6F40074624C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		3229D13D2B4ED6F00074624C /* SimbirSoftTestWithCalendarKit */ = {
 			isa = PBXGroup;
 			children = (
-				32338C0F2B569E3E0035FE05 /* Resources */,
 				3229D1542B4EFD3E0074624C /* Application */,
 				3229D1522B4EFD2D0074624C /* Models */,
 				325CB1882B50299B007A1E4A /* Views */,
@@ -103,6 +100,7 @@
 				325CB18D2B506E62007A1E4A /* Cells */,
 				325CB1922B507020007A1E4A /* SupplementaryViews */,
 				325CB1872B50297B007A1E4A /* Extensions */,
+				32338C0F2B569E3E0035FE05 /* Resources */,
 			);
 			path = SimbirSoftTestWithCalendarKit;
 			sourceTree = "<group>";
@@ -131,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				3229D13E2B4ED6F00074624C /* AppDelegate.swift */,
-				3229D1402B4ED6F00074624C /* SceneDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -333,7 +330,6 @@
 				32A4EAF12B52FECE00286250 /* DetailItemView.swift in Sources */,
 				325CB1912B506F9E007A1E4A /* TextViewCell.swift in Sources */,
 				32A4EAF32B5306AC00286250 /* DetailItemViewController.swift in Sources */,
-				3229D1412B4ED6F00074624C /* SceneDelegate.swift in Sources */,
 				32A4EAF52B53108E00286250 /* LabelCell.swift in Sources */,
 				325CB18A2B5069BD007A1E4A /* NewItemViewController.swift in Sources */,
 				32EFD8902B5564060090C71F /* CustomDateFormat.swift in Sources */,

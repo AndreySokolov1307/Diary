@@ -384,10 +384,7 @@ extension NewItemViewController: UITextFieldDelegate {
 //MARK: - UITextViewDelegate
 
 extension NewItemViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        activeTextView = textView
-    }
-    
+   
     func textViewDidEndEditing(_ textView: UITextView) {
         let myTextView = textView as! TextViewWithPlaceholder
         myTextView.placeholderLabel.isHidden = !myTextView.text.isEmpty
