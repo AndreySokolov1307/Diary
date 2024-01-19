@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 import CalendarKit
-import EventKit
+
 
 class ToDoItemEvent: EventDescriptor {
     var dateInterval: DateInterval = DateInterval()
@@ -47,6 +47,3 @@ class ToDoItemEvent: EventDescriptor {
     }
 }
 
-class pizda {
-    
-}

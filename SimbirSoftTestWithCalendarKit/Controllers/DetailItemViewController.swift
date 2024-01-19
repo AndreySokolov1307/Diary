@@ -5,22 +5,14 @@
 //  Created by Андрей Соколов on 13.01.2024.
 //
 
-import Foundation
 import UIKit
 import RealmSwift
 
-protocol DetailItemViewControllerDelegate: AnyObject {
-    func deleteItem(_ toDoItem: ToDoItem)
-}
-
 class DetailItemViewController: UIViewController {
+    
     var detailItemView: DetailItemView!
-    
     var notificationToken: NotificationToken?
-    
     var toDoItem: ToDoItem
-    
-    weak var delegate: DetailItemViewControllerDelegate?
     
     init(toDoItem: ToDoItem) {
         self.toDoItem = toDoItem
@@ -68,14 +60,7 @@ class DetailItemViewController: UIViewController {
         let alert = UIAlertController(title: "", message: "Are you sure you want to delete this event?", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Delete event", style: .destructive, handler: {  [weak self] (_) in
             self?.notificationToken?.invalidate()
-            do {
-                let realm = try Realm()
-                try realm.write {
-                    realm.delete(self!.toDoItem)
-                }
-            } catch {
-                print(error)
-            }
+            RealmManager.shared.delete(item: self!.toDoItem)
             self?.navigationController?.popViewController(animated: true)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -83,14 +68,9 @@ class DetailItemViewController: UIViewController {
     }
     
     private func subscribeToNotifications() {
-        do {
-            let realm = try Realm()
-            notificationToken = realm.observe { [weak self] (_,_)  in
-                guard let tableView = self?.detailItemView.tableView else { return }
-                tableView.reloadData()
-            }
-        } catch {
-            print(error)
+        notificationToken = RealmManager.shared.realm.observe { [weak self] (_,_)  in
+            guard let tableView = self?.detailItemView.tableView else { return }
+            tableView.reloadData()
         }
     }
     

@@ -8,22 +8,25 @@
 import UIKit
 import CalendarKit
 import RealmSwift
-import EventKit
-import EventKitUI
 
 class CalendarViewController: DayViewController {
+    
     private var notificationToken: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavController()
-        dayView.autoScrollToFirstEvent = true
+        setupDayView()
+        subscribeToNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(true, animated: true)
-        subscribeToNotifications()
+    }
+    
+    private func setupDayView() {
+        dayView.autoScrollToFirstEvent = true
     }
   
     private func setupNavController() {
@@ -44,19 +47,13 @@ class CalendarViewController: DayViewController {
     }
     
     private func subscribeToNotifications() {
-        do {
-            let realm = try Realm()
-            notificationToken = realm.observe { [weak self] (_,_)  in
-                self?.reloadData()
-            }
-        } catch {
-            print(error)
+        notificationToken = RealmManager.shared.realm.observe { [weak self] (_,_)  in
+            self?.reloadData()
         }
     }
   
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
-        let realm = try! Realm()
-        let items: [ToDoItem] =  realm.objects(ToDoItem.self).filter { $0.isInvalidated == false }.map { $0 }
+        let items = RealmManager.shared.getAllItems()
         let events: [ToDoItemEvent] = items.map { ToDoItemEvent(todoItem: $0)}
         
         let startDate = date

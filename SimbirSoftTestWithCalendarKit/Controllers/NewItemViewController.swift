@@ -5,7 +5,6 @@
 //  Created by Андрей Соколов on 11.01.2024.
 //
 
-import Foundation
 import UIKit
 import RealmSwift
 import CalendarKit
@@ -15,9 +14,9 @@ protocol NewItemViewControllerDelegate: AnyObject {
 }
 
 class NewItemViewController: UIViewController {
+    
     private var newItemView: NewItemView!
     private var toDoItem: ToDoItem?
-    
     weak var delegate: NewItemViewControllerDelegate?
     
     init(toDoItem: ToDoItem?) {
@@ -83,45 +82,28 @@ class NewItemViewController: UIViewController {
             importane = .normal
         }
         
-        if let item = toDoItem {
-            if startDateCell.datePicker.date > endDateCell.datePicker.date {
-                showChangeDateAllert()
-            } else {
-                dismiss(animated: true) {
-                    do {
-                        let realm = try Realm()
-                        try realm.write {
-                            item.name = nameCell.textField.text!
-                            item.startDate = startDateCell.datePicker.date.timeIntervalSince1970
-                            item.endDate = endDateCell.datePicker.date.timeIntervalSince1970
-                            item.note = noteCell.textView.text
-                            item.isAllDay = isAllDayCell.allDaySwitch.isOn
-                            item.importance = importane
-                        }
-                    } catch {
-                        print(error)
-                    }
-                }
+        if startDateCell.datePicker.date > endDateCell.datePicker.date {
+            showChangeDateAllert()
+        } else if let item = toDoItem {
+            dismiss(animated: true) {
+                let item = ToDoItem(id: item.id,
+                                    name: nameCell.textField.text!,
+                                    startDate: startDateCell.datePicker.date,
+                                    endDate: endDateCell.datePicker.date,
+                                    note: noteCell.textView.text,
+                                    isAllDay: isAllDayCell.allDaySwitch.isOn,
+                                    importance: importane)
+                RealmManager.shared.save(item: item)
             }
         } else {
-            if startDateCell.datePicker.date > endDateCell.datePicker.date {
-                showChangeDateAllert()
-            } else {
-                self.toDoItem = ToDoItem(name: nameCell.textField.text!,
-                                         startDate: startDateCell.datePicker.date,
-                                         endDate: endDateCell.datePicker.date,
-                                         exactTime: Date(),
-                                         note: noteCell.textView.text, isAllDay: isAllDayCell.allDaySwitch.isOn, importance: importane )
-                dismiss(animated: true) {
-                    do {
-                        let realm = try Realm()
-                        try realm.write {
-                            realm.add(self.toDoItem!)
-                        }
-                    } catch {
-                        print(error)
-                    }
-                }
+            self.toDoItem = ToDoItem(name: nameCell.textField.text!,
+                                     startDate: startDateCell.datePicker.date,
+                                     endDate: endDateCell.datePicker.date,
+                                     note: noteCell.textView.text,
+                                     isAllDay: isAllDayCell.allDaySwitch.isOn,
+                                     importance: importane )
+            dismiss(animated: true) {
+                RealmManager.shared.save(item: self.toDoItem!)
             }
         }
     }
@@ -149,7 +131,6 @@ class NewItemViewController: UIViewController {
         newItemView.tableView.keyboardDismissMode = .onDrag
     }
     
-    //MARK: - Notification to not cover note textView by keyBoard
     private func registerForKeyboardNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWasShown(_:)),
@@ -348,14 +329,7 @@ extension NewItemViewController: UITableViewDataSource {
         alert.addAction(UIAlertAction(title: "Delete event", style: .destructive, handler: {  [weak self] (_) in
             self?.delegate?.deleteButtonTapped(self!)
             self?.dismiss(animated: true) {
-                do {
-                    let realm = try Realm()
-                    try realm.write {
-                        realm.delete(item)
-                    }
-                } catch {
-                    print(error)
-                }
+                RealmManager.shared.delete(item: item)
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
