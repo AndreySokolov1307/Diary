@@ -1,9 +1,7 @@
-
 import UIKit
 import CalendarKit
-import RealmSwift
 
-fileprivate enum UIConstants {
+fileprivate enum Constants {
     enum strings {
         static let title = "Calendar"
         static let rightBarButtonItem = "Add event"
@@ -11,15 +9,18 @@ fileprivate enum UIConstants {
     }
 }
 
+protocol CalendarView {
+    func reloadData()
+}
+
 class CalendarViewController: DayViewController {
-    
-    private var notificationToken: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavController()
         setupDayView()
-        subscribeToNotifications()
+        ToDoService.shared.calendarView = self
+        ToDoService.shared.subscribeToCalendarNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,14 +33,14 @@ class CalendarViewController: DayViewController {
     }
   
     private func setupNavController() {
-        title = UIConstants.strings.title
+        title = Constants.strings.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: UIConstants.strings.rightBarButtonItem,
+            title: Constants.strings.rightBarButtonItem,
             style: .plain,
             target: self,
             action: #selector(didTapAddNewEventButton))
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: UIConstants.strings.leftBarButtunItem,
+            title: Constants.strings.leftBarButtunItem,
             style: .plain,
             target: self,
             action: #selector(didTapTodayButton))
@@ -55,15 +56,9 @@ class CalendarViewController: DayViewController {
     @objc func didTapTodayButton() {
         move(to: Date())
     }
-    
-    private func subscribeToNotifications() {
-        notificationToken = RealmManager.shared.realm.observe { [weak self] (_,_)  in
-            self?.reloadData()
-        }
-    }
-  
+
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
-        let items = RealmManager.shared.getAllItems()
+        let items = ToDoService.shared.getAllItems()
         let events: [ToDoItemEvent] = items.map { ToDoItemEvent(todoItem: $0)}
         
         let startDate = date
@@ -86,4 +81,8 @@ class CalendarViewController: DayViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 }
+
+// MARK: - CalendarView
+
+extension CalendarViewController: CalendarView {}
 

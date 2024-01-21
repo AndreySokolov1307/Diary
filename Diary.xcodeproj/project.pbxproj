@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3185C7C7894C48628868B6C9 /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAD4AC018571392D7A70DC7 /* Pods_Diary.framework */; };
-		32244B9F2B5A995100E9DEEB /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32244B9E2B5A995100E9DEEB /* RealmManager.swift */; };
+		32244B9F2B5A995100E9DEEB /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32244B9E2B5A995100E9DEEB /* ToDoService.swift */; };
 		3229D13F2B4ED6F00074624C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D13E2B4ED6F00074624C /* AppDelegate.swift */; };
 		3229D1432B4ED6F00074624C /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D1422B4ED6F00074624C /* CalendarViewController.swift */; };
 		3229D1482B4ED6F40074624C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3229D1472B4ED6F40074624C /* Assets.xcassets */; };
@@ -46,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		32244B9E2B5A995100E9DEEB /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		32244B9E2B5A995100E9DEEB /* ToDoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 		3229D13B2B4ED6F00074624C /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3229D13E2B4ED6F00074624C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3229D1422B4ED6F00074624C /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -98,12 +98,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		32244B9D2B5A992D00E9DEEB /* Managers */ = {
+		32244B9D2B5A992D00E9DEEB /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				32244B9E2B5A995100E9DEEB /* RealmManager.swift */,
+				32244B9E2B5A995100E9DEEB /* ToDoService.swift */,
 			);
-			path = Managers;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		3229D1322B4ED6F00074624C = {
@@ -129,11 +129,11 @@
 		3229D13D2B4ED6F00074624C /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				32244B9D2B5A992D00E9DEEB /* Managers */,
 				3229D1542B4EFD3E0074624C /* Application */,
 				3229D1522B4EFD2D0074624C /* Models */,
 				325CB1882B50299B007A1E4A /* Views */,
 				3229D1532B4EFD340074624C /* Controllers */,
+				32244B9D2B5A992D00E9DEEB /* Services */,
 				325CB18D2B506E62007A1E4A /* Cells */,
 				325CB1922B507020007A1E4A /* SupplementaryViews */,
 				325CB1872B50297B007A1E4A /* Extensions */,
@@ -396,7 +396,7 @@
 				32A4EAED2B52C2B700286250 /* SwitchCell.swift in Sources */,
 				3229D1432B4ED6F00074624C /* CalendarViewController.swift in Sources */,
 				325CB1862B4FF2C7007A1E4A /* TimeInterval + extension.swift in Sources */,
-				32244B9F2B5A995100E9DEEB /* RealmManager.swift in Sources */,
+				32244B9F2B5A995100E9DEEB /* ToDoService.swift in Sources */,
 				325CB1822B4FF25B007A1E4A /* ToDoItemEvent.swift in Sources */,
 				325CB1842B4FF26F007A1E4A /* ToDoItem.swift in Sources */,
 				325CB1982B5071DF007A1E4A /* DatePickerCell.swift in Sources */,

@@ -1,4 +1,3 @@
-
 import UIKit
 
 fileprivate enum UIConstants {

@@ -1,9 +1,7 @@
-
 import UIKit
-import RealmSwift
 import CalendarKit
 
-fileprivate enum UIConstants {
+fileprivate enum Constants {
     enum strings {
         static let title = "New event"
         static let saveButton = "Save"
@@ -20,7 +18,6 @@ fileprivate enum UIConstants {
         static let textViewPlaceholder = "Note"
         static let deleteButton = "Delete"
     }
-    
     enum layout {
         static let textFieldMinimumHeight: CGFloat = 44
         static let textViewMinimumHeight: CGFloat = 200
@@ -102,8 +99,8 @@ class NewItemViewController: UIViewController {
     }
 
     private func setupNavBar() {
-        navigationItem.title = UIConstants.strings.title
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: UIConstants.strings.saveButton,
+        navigationItem.title = Constants.strings.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.strings.saveButton,
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didTapSaveButton))
@@ -113,19 +110,19 @@ class NewItemViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isEnabled = false
         }
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: UIConstants.strings.cancelButton,
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Constants.strings.cancelButton,
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(didTapCancelButton))
     }
     
     @objc private func didTapSaveButton() {
-        let nameCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.nameCell) as! TextFieldCell
-        let allDayCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.allDayCell) as! SwitchCell
-        let importanceCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.importanceCell) as! SegmentContolCell
-        let startCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.startCell) as! DatePickerCell
-        let endCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.endCell) as! DatePickerCell
-        let noteCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.noteCell) as! TextViewCell
+        let nameCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.nameCell) as! TextFieldCell
+        let allDayCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.allDayCell) as! SwitchCell
+        let importanceCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.importanceCell) as! SegmentContolCell
+        let startCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.startCell) as! DatePickerCell
+        let endCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.endCell) as! DatePickerCell
+        let noteCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.noteCell) as! TextViewCell
         
         let name = nameCell.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         var importance = Importance.normal
@@ -140,8 +137,8 @@ class NewItemViewController: UIViewController {
         let note = noteCell.textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if startCell.datePicker.date > endCell.datePicker.date {
-            presentConfirmAlert(title: UIConstants.strings.saveAlertTitle,
-                          message: UIConstants.strings.saveAlertMessage)
+            presentConfirmAlert(title: Constants.strings.saveAlertTitle,
+                          message: Constants.strings.saveAlertMessage)
         } else if let item = toDoItem {
             dismiss(animated: true) {
                 let item = ToDoItem(id: item.id,
@@ -151,7 +148,7 @@ class NewItemViewController: UIViewController {
                                     note: note,
                                     isAllDay: allDayCell.allDaySwitch.isOn,
                                     importance: importance)
-                RealmManager.shared.save(item: item)
+                ToDoService.shared.save(item: item)
             }
         } else {
             self.toDoItem = ToDoItem(name: name,
@@ -161,7 +158,7 @@ class NewItemViewController: UIViewController {
                                      isAllDay: allDayCell.allDaySwitch.isOn,
                                      importance: importance )
             dismiss(animated: true) {
-                RealmManager.shared.save(item: self.toDoItem!)
+                ToDoService.shared.save(item: self.toDoItem!)
             }
         }
     }
@@ -211,15 +208,15 @@ class NewItemViewController: UIViewController {
         // Find visible rect add offset tableview content to the cell left height
         var activeRect = self.newItemView.tableView.frame
         activeRect.size.height -= keyboardFrame.height
-        let cell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.noteCell) as! TextViewCell
+        let cell = newItemView.tableView.cellForRow(at: Constants.indexPaths.noteCell) as! TextViewCell
         let cellIntersect = CGRectIntersection(activeRect, cell.frame)
         let cellLeftHeight = cell.frame.height - cellIntersect.height
         newItemView.tableView.setContentOffset(CGPoint(x: 0, y: cellLeftHeight), animated: true)
     }
     
     @objc private func keyboardWillBeHidden(_ notification: NSNotification) {
-        newItemView.tableView.contentInset = UIConstants.layout.kbWillBeHiddenContentInsets
-        newItemView.tableView.scrollIndicatorInsets = UIConstants.layout.kbWillBeHiddenContentInsets
+        newItemView.tableView.contentInset = Constants.layout.kbWillBeHiddenContentInsets
+        newItemView.tableView.scrollIndicatorInsets = Constants.layout.kbWillBeHiddenContentInsets
     }
 }
 
@@ -248,7 +245,7 @@ extension NewItemViewController: UITableViewDataSource {
         switch sections[indexPath.section] {
         case .name:
             let nameCell = TextFieldCell()
-            nameCell.textField.placeholder = UIConstants.strings.textFieldPlaceholder
+            nameCell.textField.placeholder = Constants.strings.textFieldPlaceholder
             nameCell.textField.delegate = self
             nameCell.textField.addTarget(self,
                                          action: #selector(textFieldDidChange(_:)),
@@ -257,7 +254,7 @@ extension NewItemViewController: UITableViewDataSource {
                 nameCell.textField.text = item.name
                 nameCell.textField.clearButtonMode = .always
             }
-            nameCell.heightAnchor.constraint(greaterThanOrEqualToConstant: UIConstants.layout.textFieldMinimumHeight).isActive = true
+            nameCell.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.layout.textFieldMinimumHeight).isActive = true
             cell = nameCell
         case .settings:
             let settings = Section.Settings.allCases
@@ -288,7 +285,7 @@ extension NewItemViewController: UITableViewDataSource {
                 cell = importanceCell
             case .starts:
                 let startCell = DatePickerCell()
-                startCell.textLabel?.text = UIConstants.strings.startsLabel
+                startCell.textLabel?.text = Constants.strings.startsLabel
                 if let item = toDoItem {
                     startCell.datePicker.date = item.startDate.date()
                     if item.isAllDay {
@@ -300,20 +297,20 @@ extension NewItemViewController: UITableViewDataSource {
                 cell = startCell
             case .ends:
                 let endCell = DatePickerCell()
-                endCell.textLabel?.text = UIConstants.strings.endsLabel
+                endCell.textLabel?.text = Constants.strings.endsLabel
                 if let item = toDoItem {
                     endCell.datePicker.date = item.endDate.date()
                     if item.isAllDay {
                         endCell.datePicker.datePickerMode = .date
                     }
                 } else {
-                    endCell.datePicker.date = Date().addingTimeInterval(UIConstants.dates.oneHour)
+                    endCell.datePicker.date = Date().addingTimeInterval(Constants.dates.oneHour)
                 }
                 cell = endCell
             }
         case .note:
             let noteCell = TextViewCell()
-            noteCell.textView.placeholderLabel.text = UIConstants.strings.textViewPlaceholder
+            noteCell.textView.placeholderLabel.text = Constants.strings.textViewPlaceholder
             noteCell.textView.delegate = self
             if let item = toDoItem,
                let note = item.note,
@@ -321,11 +318,11 @@ extension NewItemViewController: UITableViewDataSource {
                 noteCell.textView.placeholderLabel.isHidden = true
                 noteCell.textView.text = note
             }
-            noteCell.heightAnchor.constraint(greaterThanOrEqualToConstant: UIConstants.layout.textViewMinimumHeight).isActive = true
+            noteCell.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.layout.textViewMinimumHeight).isActive = true
             cell = noteCell
         case .delete:
             let deleteCell = ButtonCell()
-            deleteCell.button.setTitle(UIConstants.strings.deleteButton, for: .normal)
+            deleteCell.button.setTitle(Constants.strings.deleteButton, for: .normal)
             deleteCell.button.setTitleColor(.systemRed, for: .normal)
             deleteCell.button.addTarget(self,
                                         action: #selector(didTapDeleteButton),
@@ -348,8 +345,8 @@ extension NewItemViewController: UITableViewDataSource {
     }
     
     @objc private func switchValueChanged(_ sender: UISwitch) {
-        let startCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.startCell) as! DatePickerCell
-        let finishCell = newItemView.tableView.cellForRow(at: UIConstants.indexPaths.endCell) as! DatePickerCell
+        let startCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.startCell) as! DatePickerCell
+        let finishCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.endCell) as! DatePickerCell
         
         if sender.isOn {
             startCell.datePicker.datePickerMode = .date
@@ -363,19 +360,19 @@ extension NewItemViewController: UITableViewDataSource {
     @objc private func didTapDeleteButton() {
         guard let item = toDoItem else { return }
         
-        let deleteAction = UIAlertAction(title: UIConstants.strings.deleteAlertActionTitle,
+        let deleteAction = UIAlertAction(title: Constants.strings.deleteAlertActionTitle,
                                          style: .destructive,
                                          handler: {  [weak self] (_) in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.deleteButtonTapped(self!)
             strongSelf.dismiss(animated: true) {
-                RealmManager.shared.delete(item: item)
+                ToDoService.shared.delete(item: item)
             }
         })
-        let cancelAction = UIAlertAction(title: UIConstants.strings.cancelAlertActionTiitle,
+        let cancelAction = UIAlertAction(title: Constants.strings.cancelAlertActionTiitle,
                                          style: .cancel)
-        presentActionSheetAlert(title: UIConstants.strings.deleteAlertTitle,
-                                message: UIConstants.strings.deleteAlertMessage,
+        presentActionSheetAlert(title: Constants.strings.deleteAlertTitle,
+                                message: Constants.strings.deleteAlertMessage,
                                 actions: [deleteAction, cancelAction])
     }
 }

@@ -1,8 +1,6 @@
-
 import Foundation
 import RealmSwift
 import CalendarKit
-
 
 class ToDoItemEvent: EventDescriptor {
     var dateInterval: DateInterval = DateInterval()

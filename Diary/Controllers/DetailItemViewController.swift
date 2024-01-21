@@ -1,9 +1,7 @@
-
 import UIKit
-import RealmSwift
 import CalendarKit
 
-fileprivate enum UIConstants {
+fileprivate enum Constants {
     enum strings {
         static let title = "Event details"
         static let editButton = "Edit"
@@ -37,28 +35,32 @@ fileprivate enum UIConstants {
     }
 }
 
+protocol ItemView {
+    func reloadData()
+}
+
 class DetailItemViewController: UIViewController {
-    
+
     private enum Row: String, CaseIterable {
-         case name, date, importance, note
-         
-         static func getRows(toDoItem: ToDoItem) -> [Row] {
-             var rows = self.allCases
-             if let _ = toDoItem.note {
-                 return rows
-             } else {
-                 rows.removeLast()
-                 return rows
-             }
-         }
-     }
+        case name, date, importance, note
+        
+        static func getRows(toDoItem: ToDoItem) -> [Row] {
+            var rows = self.allCases
+            if let note = toDoItem.note,
+               !note.isEmpty {
+                return rows
+            } else {
+                rows.removeLast()
+                return rows
+            }
+        }
+    }
     
     private var detailItemView: DetailItemView!
-    private var notificationToken: NotificationToken?
     private var toDoItem: ToDoItem
-    private lazy var rows = {
+    private var rows: [Row] {
         Row.getRows(toDoItem: toDoItem)
-    }()
+    }
     
     init(toDoItem: ToDoItem) {
         self.toDoItem = toDoItem
@@ -78,7 +80,8 @@ class DetailItemViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupNavController()
-        subscribeToNotifications()
+        ToDoService.shared.itemView = self
+        ToDoService.shared.subscribeToItemNotifications()
     }
     
     private func setupTableView() {
@@ -87,8 +90,8 @@ class DetailItemViewController: UIViewController {
     }
     
     private func setupNavController() {
-        navigationItem.title = UIConstants.strings.title
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: UIConstants.strings.editButton,
+        navigationItem.title = Constants.strings.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.strings.editButton,
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didTapEditButton))
@@ -97,7 +100,7 @@ class DetailItemViewController: UIViewController {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
                                     target: nil,
                                     action: nil)
-        let deleteItem = UIBarButtonItem(title: UIConstants.strings.deleteButton,
+        let deleteItem = UIBarButtonItem(title: Constants.strings.deleteButton,
                                          style: .plain,
                                          target: self,
                                          action: #selector(didTapDeleteButton))
@@ -106,26 +109,18 @@ class DetailItemViewController: UIViewController {
     }
     
     @objc func didTapDeleteButton() {
-        let deleteAction = UIAlertAction(title: UIConstants.strings.deleteAlertActionTitle,
+        let deleteAction = UIAlertAction(title: Constants.strings.deleteAlertActionTitle,
                                          style: .destructive,
                                          handler: {  [weak self] (_) in
             guard let strongSelf = self else { return }
-            strongSelf.notificationToken?.invalidate()
-            RealmManager.shared.delete(item: strongSelf.toDoItem)
+            ToDoService.shared.delete(item: strongSelf.toDoItem)
             strongSelf.navigationController?.popViewController(animated: true)
         })
-        let cancelAction = UIAlertAction(title: UIConstants.strings.cancelAlertActionTiitle,
+        let cancelAction = UIAlertAction(title: Constants.strings.cancelAlertActionTiitle,
                                          style: .cancel)
-        presentActionSheetAlert(title: UIConstants.strings.deleteAlertTitle,
-                                message: UIConstants.strings.deleteAlertMessage,
+        presentActionSheetAlert(title: Constants.strings.deleteAlertTitle,
+                                message: Constants.strings.deleteAlertMessage,
                                 actions: [deleteAction, cancelAction])
-    }
-    
-    private func subscribeToNotifications() {
-        notificationToken = RealmManager.shared.realm.observe { [weak self] (_,_)  in
-            guard let tableView = self?.detailItemView.tableView else { return }
-            tableView.reloadData()
-        }
     }
     
     @objc private func didTapEditButton() {
@@ -140,7 +135,7 @@ class DetailItemViewController: UIViewController {
 
 extension DetailItemViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Row.getRows(toDoItem: self.toDoItem).count
+        return rows.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -149,14 +144,14 @@ extension DetailItemViewController: UITableViewDataSource {
         case .name:
             let nameCell = LabelCell()
             nameCell.label.text = toDoItem.name
-            nameCell.label.textColor = UIConstants.colors.nameLabelColor
-            nameCell.label.font = UIConstants.fonts.nameLabelFont
-            nameCell.separatorInset = UIConstants.layout.nameCellSeparatorInset
+            nameCell.label.textColor = Constants.colors.nameLabelColor
+            nameCell.label.font = Constants.fonts.nameLabelFont
+            nameCell.separatorInset = Constants.layout.nameCellSeparatorInset
             cell = nameCell
         case .date:
             let dateCell = LabelCell()
-            dateCell.label.textColor = UIConstants.colors.dateLabelColor
-            dateCell.label.font = UIConstants.fonts.dateLabelFont
+            dateCell.label.textColor = Constants.colors.dateLabelColor
+            dateCell.label.font = Constants.fonts.dateLabelFont
             dateCell.label.attributedText = configureFormattedAttributedText(isAllDay: toDoItem.isAllDay)
             
             cell = dateCell
@@ -173,12 +168,12 @@ extension DetailItemViewController: UITableViewDataSource {
             cell = importanceCell
         case .note:
             let noteCell = TwoLabelsCell()
-            noteCell.toplabel.text = UIConstants.strings.noteTopLabel
-            noteCell.toplabel.font = UIConstants.fonts.noteTopLabelFont
-            noteCell.toplabel.textColor = UIConstants.colors.noteTopLabelColor
+            noteCell.toplabel.text = Constants.strings.noteTopLabel
+            noteCell.toplabel.font = Constants.fonts.noteTopLabelFont
+            noteCell.toplabel.textColor = Constants.colors.noteTopLabelColor
             noteCell.bottomlabel.text = toDoItem.note
-            noteCell.bottomlabel.font = UIConstants.fonts.noteBottomLabelFont
-            noteCell.bottomlabel.textColor = UIConstants.colors.noteBottomLabelColor
+            noteCell.bottomlabel.font = Constants.fonts.noteBottomLabelFont
+            noteCell.bottomlabel.textColor = Constants.colors.noteBottomLabelColor
             noteCell.bottomlabel.adjustsFontSizeToFitWidth = false
             cell = noteCell
         }
@@ -188,7 +183,7 @@ extension DetailItemViewController: UITableViewDataSource {
     private func configureFormattedAttributedText(isAllDay: Bool) -> NSMutableAttributedString {
         let dateFormatter = DateFormatter()
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = UIConstants.layout.paragraphSpacing
+        paragraphStyle.paragraphSpacing = Constants.layout.paragraphSpacing
         var startString = ""
         var endString = ""
         var finalString = ""
@@ -255,13 +250,23 @@ extension DetailItemViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIConstants.layout.estimatedHeightForRow
+        return Constants.layout.estimatedHeightForRow
     }
 }
 
+// MARK: - NewItemViewControllerDelegate
+
 extension DetailItemViewController: NewItemViewControllerDelegate {
     func deleteButtonTapped(_ vc: NewItemViewController) {
-        notificationToken?.invalidate()
+        ToDoService.shared.invalidateItemToken()
         navigationController?.popViewController(animated: false)
+    }
+}
+
+// MARK: - ItemView
+
+extension DetailItemViewController: ItemView {
+    func reloadData() {
+        self.detailItemView.tableView.reloadData()
     }
 }
