@@ -37,10 +37,6 @@ fileprivate enum Constants {
     }
 }
 
-protocol NewItemViewControllerDelegate: AnyObject {
-    func deleteButtonTapped(_ vc: NewItemViewController)
-}
-
 class NewItemViewController: UIViewController {
     
    private enum Section: String, CaseIterable {
@@ -65,7 +61,6 @@ class NewItemViewController: UIViewController {
     private lazy var sections = {
         Section.getSections(toDoItem: toDoItem)
     }()
-    weak var delegate: NewItemViewControllerDelegate?
     
     init(toDoItem: ToDoItem?) {
         self.toDoItem = toDoItem
@@ -364,7 +359,6 @@ extension NewItemViewController: UITableViewDataSource {
                                          style: .destructive,
                                          handler: {  [weak self] (_) in
             guard let strongSelf = self else { return }
-            strongSelf.delegate?.deleteButtonTapped(self!)
             strongSelf.dismiss(animated: true) {
                 ToDoService.shared.delete(item: item)
             }

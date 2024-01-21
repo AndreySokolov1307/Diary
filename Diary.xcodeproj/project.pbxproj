@@ -28,11 +28,6 @@
 		3267B3472B5C56A1001184DE /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3267B3462B5C56A1001184DE /* UIViewController+Extension.swift */; };
 		32A4EAED2B52C2B700286250 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4EAEC2B52C2B700286250 /* SwitchCell.swift */; };
 		32A4EAEF2B52EBEE00286250 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4EAEE2B52EBEE00286250 /* ButtonCell.swift */; };
-		32A4EAF12B52FECE00286250 /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4EAF02B52FECE00286250 /* DetailItemView.swift */; };
-		32A4EAF32B5306AC00286250 /* DetailItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4EAF22B5306AC00286250 /* DetailItemViewController.swift */; };
-		32A4EAF52B53108E00286250 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4EAF42B53108E00286250 /* LabelCell.swift */; };
-		32A4EAF72B5324D100286250 /* TwoLabelsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A4EAF62B5324D100286250 /* TwoLabelsCell.swift */; };
-		32EFD8902B5564060090C71F /* CustomDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EFD88F2B5564060090C71F /* CustomDateFormat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,11 +64,6 @@
 		3267B3462B5C56A1001184DE /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		32A4EAEC2B52C2B700286250 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		32A4EAEE2B52EBEE00286250 /* ButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
-		32A4EAF02B52FECE00286250 /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
-		32A4EAF22B5306AC00286250 /* DetailItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemViewController.swift; sourceTree = "<group>"; };
-		32A4EAF42B53108E00286250 /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
-		32A4EAF62B5324D100286250 /* TwoLabelsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoLabelsCell.swift; sourceTree = "<group>"; };
-		32EFD88F2B5564060090C71F /* CustomDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormat.swift; sourceTree = "<group>"; };
 		3A336194157720066485CEE0 /* Pods-Diary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.release.xcconfig"; path = "Target Support Files/Pods-Diary/Pods-Diary.release.xcconfig"; sourceTree = "<group>"; };
 		7CAD4AC018571392D7A70DC7 /* Pods_Diary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		952F71DF740138703F924347 /* Pods-Diary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diary.debug.xcconfig"; path = "Target Support Files/Pods-Diary/Pods-Diary.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,7 +137,6 @@
 			children = (
 				325CB1812B4FF25B007A1E4A /* ToDoItemEvent.swift */,
 				325CB1832B4FF26F007A1E4A /* ToDoItem.swift */,
-				32EFD88F2B5564060090C71F /* CustomDateFormat.swift */,
 				324B02772B57F4A30008CCAC /* Importance.swift */,
 			);
 			path = Models;
@@ -158,7 +147,6 @@
 			children = (
 				3229D1422B4ED6F00074624C /* CalendarViewController.swift */,
 				325CB1892B5069BD007A1E4A /* NewItemViewController.swift */,
-				32A4EAF22B5306AC00286250 /* DetailItemViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -202,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				325CB18B2B506A48007A1E4A /* NewItemView.swift */,
-				32A4EAF02B52FECE00286250 /* DetailItemView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -216,8 +203,6 @@
 				325CB1972B5071DF007A1E4A /* DatePickerCell.swift */,
 				32A4EAEC2B52C2B700286250 /* SwitchCell.swift */,
 				32A4EAEE2B52EBEE00286250 /* ButtonCell.swift */,
-				32A4EAF42B53108E00286250 /* LabelCell.swift */,
-				32A4EAF62B5324D100286250 /* TwoLabelsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -400,19 +385,14 @@
 				325CB1822B4FF25B007A1E4A /* ToDoItemEvent.swift in Sources */,
 				325CB1842B4FF26F007A1E4A /* ToDoItem.swift in Sources */,
 				325CB1982B5071DF007A1E4A /* DatePickerCell.swift in Sources */,
-				32A4EAF72B5324D100286250 /* TwoLabelsCell.swift in Sources */,
 				32A4EAEF2B52EBEE00286250 /* ButtonCell.swift in Sources */,
 				325CB18F2B506EEC007A1E4A /* TextFieldCell.swift in Sources */,
 				3267B3472B5C56A1001184DE /* UIViewController+Extension.swift in Sources */,
 				3229D13F2B4ED6F00074624C /* AppDelegate.swift in Sources */,
 				325CB1942B507063007A1E4A /* TextViewWithPlaceholder.swift in Sources */,
-				32A4EAF12B52FECE00286250 /* DetailItemView.swift in Sources */,
 				325CB1912B506F9E007A1E4A /* TextViewCell.swift in Sources */,
-				32A4EAF32B5306AC00286250 /* DetailItemViewController.swift in Sources */,
-				32A4EAF52B53108E00286250 /* LabelCell.swift in Sources */,
 				324B02782B57F4A30008CCAC /* Importance.swift in Sources */,
 				325CB18A2B5069BD007A1E4A /* NewItemViewController.swift in Sources */,
-				32EFD8902B5564060090C71F /* CustomDateFormat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

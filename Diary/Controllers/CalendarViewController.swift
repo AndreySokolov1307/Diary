@@ -77,8 +77,9 @@ class CalendarViewController: DayViewController {
         guard let ckEvent = eventView.descriptor as? ToDoItemEvent else {
             return
         }
-        let controller = DetailItemViewController(toDoItem: ckEvent.todoItem)
-        navigationController?.pushViewController(controller, animated: true)
+        let controller = NewItemViewController(toDoItem: ckEvent.todoItem)
+        let nav = UINavigationController(rootViewController: controller)
+        navigationController?.present(nav, animated: true)
     }
 }
 
