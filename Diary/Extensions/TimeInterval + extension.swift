@@ -1,9 +1,3 @@
-//
-//  TimeInterval + extension.swift
-//  SimbirSoftTestWithCalendarKit
-//
-//  Created by Андрей Соколов on 11.01.2024.
-//
 
 import Foundation
 

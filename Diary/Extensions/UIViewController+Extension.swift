@@ -1,9 +1,3 @@
-//
-//  UIViewController+Extension.swift
-//  Diary
-//
-//  Created by Андрей Соколов on 20.01.2024.
-//
 
 import UIKit
 

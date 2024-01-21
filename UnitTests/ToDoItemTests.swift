@@ -1,27 +1,27 @@
-//
-//  ToDoItemTests.swift
-//  UnitTests
-//
-//  Created by Андрей Соколов on 17.01.2024.
-//
 
 import XCTest
 @testable import Diary
+
+fileprivate enum Constants {
+        static let id = "itemID"
+        static let name = "Do swift learning"
+        static let startDateTimestamp = TimeInterval(floatLiteral: 1705494600) // 2024.01.17 14.30
+        static let endDateTimestamp = TimeInterval(floatLiteral: 170550540)    // 2024.01.17 17.30
+        static let isAllDay = false
+        static let importance: Importance = .high
+}
 
 final class ToDoItemTests: XCTestCase {
     
     var sut: ToDoItem!
 
     override func setUpWithError() throws {
-       let startTimeStamp = TimeInterval(floatLiteral: 1705494600) // 2024.01.17 14.30
-       let endDateTimeStamp = TimeInterval(floatLiteral: 170550540) // 2024.01.17 17.30
-        
-        sut = ToDoItem(id: "itemID" ,
-                       name: "Do swift learning",
-                       startDate: startTimeStamp.date(),
-                       endDate: endDateTimeStamp.date(),
-                       isAllDay: false,
-                       importance: .hight)
+        sut = ToDoItem(id: Constants.id ,
+                       name: Constants.name,
+                       startDate: Constants.startDateTimestamp.date(),
+                       endDate: Constants.endDateTimestamp.date(),
+                       isAllDay: Constants.isAllDay,
+                       importance: Constants.importance)
     }
 
     override func tearDownWithError() throws {
@@ -30,18 +30,16 @@ final class ToDoItemTests: XCTestCase {
 
     func testJsonProperty() {
         // Given
-        let dictionary: [String : Any] = ["id": "itemID",
-                                          "name": "Do swift learning",
-                                          "startDate": 1705494600,
-                                          "endDate": 170550540,
-                                          "isAllDay": false,
-                                          "importance": "hight"]
-        let expectedResult = true
+        let dictionary: [String : Any] = [JSONKeys.id : Constants.id,
+                                          JSONKeys.name : Constants.name,
+                                          JSONKeys.startDate : Constants.startDateTimestamp,
+                                          JSONKeys.endDate : Constants.endDateTimestamp,
+                                          JSONKeys.isAllDay : Constants.isAllDay,
+                                          JSONKeys.importance : Constants.importance.rawValue]
         // When
         let json = sut.json as! [String: Any]
-        let result = NSDictionary(dictionary: dictionary).isEqual(to: json)
         // Then
-        XCTAssertEqual(result, expectedResult)
+        XCTAssert(NSDictionary(dictionary: dictionary).isEqual(to: json))
     }
     
     func testJsonParsing() {

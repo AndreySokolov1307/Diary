@@ -1,9 +1,3 @@
-//
-//  ToDoItem.swift
-//  SimbirSoftTestWithCalendarKit
-//
-//  Created by Андрей Соколов on 11.01.2024.
-//
 
 import Foundation
 import RealmSwift
@@ -31,7 +25,7 @@ class ToDoItem: Object {
 
 //MARK: - JSON keys
 
-fileprivate enum JSONKeys {
+enum JSONKeys {
     static let id = "id"
     static let name = "name"
     static let startDate = "startDate"

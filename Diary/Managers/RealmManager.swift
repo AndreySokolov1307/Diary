@@ -1,9 +1,3 @@
-//
-//  RealmManager.swift
-//  SimbirSoftTestWithCalendarKit
-//
-//  Created by Андрей Соколов on 19.01.2024.
-//
 
 import Foundation
 import RealmSwift
