@@ -277,18 +277,6 @@ extension NewItemViewController: UITableViewDataSource {
             case .importance:
                 let importanceCell = SegmentContolCell()
                 setupSegmentControl(importanceCell.segmentControl)
-                if let item = toDoItem {
-                    switch item.importance {
-                    case .high:
-                        importanceCell.segmentControl.selectedSegmentIndex = 2
-                    case .low:
-                        importanceCell.segmentControl.selectedSegmentIndex = 0
-                    default:
-                        importanceCell.segmentControl.selectedSegmentIndex = 1
-                    }
-                } else {
-                    importanceCell.segmentControl.selectedSegmentIndex = 1
-                }
                 importanceCell.label.text = Constants.strings.importanceLabel
                 cell = importanceCell
             case .starts:
@@ -353,6 +341,18 @@ extension NewItemViewController: UITableViewDataSource {
         segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexTwo,
                                      at: 2,
                                      animated: true)
+        if let item = toDoItem {
+            switch item.importance {
+            case .high:
+                segmentControl.selectedSegmentIndex = 2
+            case .low:
+                segmentControl.selectedSegmentIndex = 0
+            default:
+                segmentControl.selectedSegmentIndex = 1
+            }
+        } else {
+            segmentControl.selectedSegmentIndex = 1
+        }
     }
 
     @objc private func textFieldDidChange(_ sender: UITextField) {
