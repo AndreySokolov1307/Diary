@@ -13,6 +13,11 @@ fileprivate enum Constants {
         static let deleteAlertActionTitle = "Delete event"
         static let cancelAlertActionTiitle = "Cancel"
         static let textFieldPlaceholder = "New event"
+        static let segmentControlIndexZero = Importance.low.emoji
+        static let segmentControlIndexOne = Importance.normal.emoji
+        static let segmentControlIndexTwo = Importance.high.emoji
+        static let allDayLabel = "All-day"
+        static let importanceLabel = "Importance"
         static let startsLabel = "Starts"
         static let endsLabel = "Ends"
         static let textViewPlaceholder = "Note"
@@ -267,9 +272,11 @@ extension NewItemViewController: UITableViewDataSource {
                 allDayCell.allDaySwitch.addTarget(self,
                                                   action: #selector(switchValueChanged(_:)),
                                                   for: .valueChanged)
+                allDayCell.label.text = Constants.strings.allDayLabel
                 cell = allDayCell
             case .importance:
                 let importanceCell = SegmentContolCell()
+                setupSegmentControl(importanceCell.segmentControl)
                 if let item = toDoItem {
                     switch item.importance {
                     case .high:
@@ -282,6 +289,7 @@ extension NewItemViewController: UITableViewDataSource {
                 } else {
                     importanceCell.segmentControl.selectedSegmentIndex = 1
                 }
+                importanceCell.label.text = Constants.strings.importanceLabel
                 cell = importanceCell
             case .starts:
                 let startCell = DatePickerCell()
@@ -333,6 +341,18 @@ extension NewItemViewController: UITableViewDataSource {
             cell.contentView.isUserInteractionEnabled = false
         }
         return cell
+    }
+    
+    private func setupSegmentControl(_ segmentControl: UISegmentedControl) {
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexZero ,
+                                     at: 0,
+                                     animated: true)
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexOne,
+                                     at: 1,
+                                     animated: true)
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexTwo,
+                                     at: 2,
+                                     animated: true)
     }
 
     @objc private func textFieldDidChange(_ sender: UITextField) {

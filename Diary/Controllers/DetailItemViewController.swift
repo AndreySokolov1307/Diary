@@ -11,6 +11,10 @@ fileprivate enum Constants {
         static let deleteAlertMessage = "Are you sure you want to delete this event?"
         static let deleteAlertActionTitle = "Delete event"
         static let cancelAlertActionTiitle = "Cancel"
+        static let segmentControlIndexZero = Importance.low.emoji
+        static let segmentControlIndexOne = Importance.normal.emoji
+        static let segmentControlIndexTwo = Importance.high.emoji
+        static let importanceLabel = "Importance"
         static let noteTopLabel = "Notes"
     }
     enum layout {
@@ -157,14 +161,8 @@ extension DetailItemViewController: UITableViewDataSource {
             cell = dateCell
         case .importance:
             let importanceCell = SegmentContolCell()
-            switch toDoItem.importance {
-            case .high:
-                importanceCell.segmentControl.selectedSegmentIndex = 2
-            case .low:
-                importanceCell.segmentControl.selectedSegmentIndex = 0
-            default:
-                importanceCell.segmentControl.selectedSegmentIndex = 1
-            }
+            setupSegmentControl(importanceCell.segmentControl)
+            importanceCell.label.text = Constants.strings.importanceLabel
             cell = importanceCell
         case .note:
             let noteCell = TwoLabelsCell()
@@ -179,6 +177,27 @@ extension DetailItemViewController: UITableViewDataSource {
         }
         return cell
     }
+    
+    private func setupSegmentControl(_ segmentControl: UISegmentedControl) {
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexZero ,
+                                     at: 0,
+                                     animated: true)
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexOne,
+                                     at: 1,
+                                     animated: true)
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexTwo,
+                                     at: 2,
+                                     animated: true)
+        switch toDoItem.importance {
+        case .high:
+            segmentControl.selectedSegmentIndex = 2
+        case .low:
+            segmentControl.selectedSegmentIndex = 0
+        default:
+            segmentControl.selectedSegmentIndex = 1
+        }
+    }
+
         
     private func configureFormattedAttributedText(isAllDay: Bool) -> NSMutableAttributedString {
         let dateFormatter = DateFormatter()
@@ -235,7 +254,7 @@ extension DetailItemViewController: UITableViewDataSource {
                 attributedString = NSMutableAttributedString(string: finalString,
                                                              attributes: [.paragraphStyle: paragraphStyle])
                 // from 4:05 PM Wed, Jan 10, 2024
-                // to 5:05 PM Thu, Jan 11, 20245
+                // to 5:05 PM Thu, Jan 11, 2024
                 return attributedString
             }
         }
@@ -254,7 +273,7 @@ extension DetailItemViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - NewItemViewControllerDelegate
+//MARK: - NewItemViewControllerDelegate
 
 extension DetailItemViewController: NewItemViewControllerDelegate {
     func deleteButtonTapped(_ vc: NewItemViewController) {
@@ -263,7 +282,7 @@ extension DetailItemViewController: NewItemViewControllerDelegate {
     }
 }
 
-// MARK: - ItemView
+//MARK: - ItemView
 
 extension DetailItemViewController: ItemView {
     func reloadData() {
