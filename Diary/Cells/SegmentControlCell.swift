@@ -15,23 +15,12 @@ class SegmentContolCell: UITableViewCell {
     let label: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17)
-        label.text = "Importance"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let segmentControl: UISegmentedControl = {
         let segmentConttol = UISegmentedControl()
-    
-        segmentConttol.insertSegment(withTitle: Importance.low.emoji ,
-                                     at: 0,
-                                     animated: true)
-        segmentConttol.insertSegment(withTitle: Importance.normal.emoji,
-                                     at: 1,
-                                     animated: true)
-        segmentConttol.insertSegment(withTitle: Importance.high.emoji,
-                                     at: 2,
-                                     animated: true)
         segmentConttol.translatesAutoresizingMaskIntoConstraints = false
         return segmentConttol
     }()

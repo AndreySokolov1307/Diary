@@ -5,7 +5,6 @@ class SwitchCell: UITableViewCell {
     
     let label: UILabel = {
         let label = UILabel()
-        label.text = "All-day"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
         return label

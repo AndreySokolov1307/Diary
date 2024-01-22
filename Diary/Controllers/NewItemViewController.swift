@@ -13,6 +13,11 @@ fileprivate enum Constants {
         static let deleteAlertActionTitle = "Delete event"
         static let cancelAlertActionTiitle = "Cancel"
         static let textFieldPlaceholder = "New event"
+        static let allDayLabel = "All-day"
+        static let importanceLabel = "Importance"
+        static let segmentControlIndexZero = Importance.low.emoji
+        static let segmentControlIndexOne = Importance.normal.emoji
+        static let segmentControlIndexTwo = Importance.high.emoji
         static let startsLabel = "Starts"
         static let endsLabel = "Ends"
         static let textViewPlaceholder = "Note"
@@ -262,21 +267,12 @@ extension NewItemViewController: UITableViewDataSource {
                 allDayCell.allDaySwitch.addTarget(self,
                                                   action: #selector(switchValueChanged(_:)),
                                                   for: .valueChanged)
+                allDayCell.label.text = Constants.strings.allDayLabel
                 cell = allDayCell
             case .importance:
                 let importanceCell = SegmentContolCell()
-                if let item = toDoItem {
-                    switch item.importance {
-                    case .high:
-                        importanceCell.segmentControl.selectedSegmentIndex = 2
-                    case .low:
-                        importanceCell.segmentControl.selectedSegmentIndex = 0
-                    default:
-                        importanceCell.segmentControl.selectedSegmentIndex = 1
-                    }
-                } else {
-                    importanceCell.segmentControl.selectedSegmentIndex = 1
-                }
+                setupSegmentControl(importanceCell.segmentControl)
+                importanceCell.label.text = Constants.strings.importanceLabel
                 cell = importanceCell
             case .starts:
                 let startCell = DatePickerCell()
@@ -328,6 +324,30 @@ extension NewItemViewController: UITableViewDataSource {
             cell.contentView.isUserInteractionEnabled = false
         }
         return cell
+    }
+    
+    private func setupSegmentControl(_ segmentControl: UISegmentedControl) {
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexZero,
+                                     at: 0,
+                                     animated: true)
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexOne,
+                                     at: 1,
+                                     animated: true)
+        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexTwo,
+                                     at: 2,
+                                     animated: true)
+        if let item = toDoItem {
+            switch item.importance {
+            case .high:
+                segmentControl.selectedSegmentIndex = 2
+            case .low:
+                segmentControl.selectedSegmentIndex = 0
+            default:
+                segmentControl.selectedSegmentIndex = 1
+            }
+        } else {
+            segmentControl.selectedSegmentIndex = 1
+        }
     }
 
     @objc private func textFieldDidChange(_ sender: UITextField) {
