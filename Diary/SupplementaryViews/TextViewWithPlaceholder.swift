@@ -12,19 +12,19 @@ class TextViewWithPlaceholder: UITextView {
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        configureView()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureView() {
+    private func setupLayout() {
         addSubview(placeholderLabel)
-        
-        NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: 7),
-            placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-        ])
+   
+        placeholderLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(7)
+            make.left.equalToSuperview().inset(4)
+        }
     }
 }

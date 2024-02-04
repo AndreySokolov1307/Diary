@@ -1,11 +1,20 @@
 import UIKit
 
+fileprivate enum Constants {
+    enum strings {
+        static let deleteButton = "Delete"
+    }
+    enum layout {
+        static let buttonMinimumHeight: CGFloat = 44
+    }
+}
+
 class ButtonCell: UITableViewCell {
     static let reuseIdentifier = "ButtonCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupView()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -19,15 +28,24 @@ class ButtonCell: UITableViewCell {
         return button
     }()
     
-    private func setupView() {
+    func configure(forViewController vc: UIViewController, with item: ToDoItem?) {
+        guard let newItemVC = vc as? NewItemViewController else { return }
+        button.setTitle(Constants.strings.deleteButton, for: .normal)
+        button.setTitleColor(.systemRed, for: .normal)
+        button.addTarget(newItemVC.self,
+                         action: #selector(newItemVC.didTapDeleteButton),
+                         for: .touchUpInside)
+    }
+    
+    private func setupLayout() {
         contentView.addSubview(button)
-        
-        NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: contentView.topAnchor),
-            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            button.heightAnchor.constraint(greaterThanOrEqualToConstant: 44),
-        ])
+       
+        button.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top)
+            make.left.equalTo(contentView.snp.left)
+            make.right.equalTo(contentView.snp.right)
+            make.bottom.equalTo(contentView.snp.bottom)
+            make.height.greaterThanOrEqualTo(Constants.layout.buttonMinimumHeight)
+        }
     }
 }

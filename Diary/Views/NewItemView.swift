@@ -1,5 +1,6 @@
 import UIKit
 import CalendarKit
+import SnapKit
 
 class NewItemView: UIView {
     
@@ -22,11 +23,11 @@ class NewItemView: UIView {
     private func setupView() {
         addSubview(tableView)
         
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
+        tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
 }

@@ -12,20 +12,8 @@ fileprivate enum Constants {
         static let deleteAlertMessage = "Are you sure you want to delete this event?"
         static let deleteAlertActionTitle = "Delete event"
         static let cancelAlertActionTiitle = "Cancel"
-        static let textFieldPlaceholder = "New event"
-        static let allDayLabel = "All-day"
-        static let importanceLabel = "Importance"
-        static let segmentControlIndexZero = Importance.low.emoji
-        static let segmentControlIndexOne = Importance.normal.emoji
-        static let segmentControlIndexTwo = Importance.high.emoji
-        static let startsLabel = "Starts"
-        static let endsLabel = "Ends"
-        static let textViewPlaceholder = "Note"
-        static let deleteButton = "Delete"
     }
     enum layout {
-        static let textFieldMinimumHeight: CGFloat = 44
-        static let textViewMinimumHeight: CGFloat = 200
         static let kbWillBeHiddenContentInsets = UIEdgeInsets.zero
     }
     enum indexPaths {
@@ -36,9 +24,6 @@ fileprivate enum Constants {
         static let endCell = IndexPath(row: 3, section: 1)
         static let noteCell = IndexPath(row: 0, section: 2)
         static let deleteCell = IndexPath(row: 0, section: 3)
-    }
-    enum dates {
-        static let oneHour: TimeInterval = 3600
     }
 }
 
@@ -71,7 +56,7 @@ class NewItemViewController: UIViewController {
         self.toDoItem = toDoItem
         super.init(nibName: nil, bundle: nil)
     }
-    
+  
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -245,79 +230,35 @@ extension NewItemViewController: UITableViewDataSource {
         switch sections[indexPath.section] {
         case .name:
             let nameCell = TextFieldCell()
-            nameCell.textField.placeholder = Constants.strings.textFieldPlaceholder
-            nameCell.textField.delegate = self
-            nameCell.textField.addTarget(self,
-                                         action: #selector(textFieldDidChange(_:)),
-                                         for: .editingChanged)
-            if let item = toDoItem {
-                nameCell.textField.text = item.name
-                nameCell.textField.clearButtonMode = .always
-            }
-            nameCell.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.layout.textFieldMinimumHeight).isActive = true
+            nameCell.configure(forViewController: self, with: toDoItem)
             cell = nameCell
         case .settings:
             let settings = Section.Settings.allCases
             switch settings[indexPath.row] {
             case .allDay:
                 let allDayCell = SwitchCell()
-                if let item = toDoItem {
-                    allDayCell.allDaySwitch.isOn = item.isAllDay
-                }
-                allDayCell.allDaySwitch.addTarget(self,
-                                                  action: #selector(switchValueChanged(_:)),
-                                                  for: .valueChanged)
-                allDayCell.label.text = Constants.strings.allDayLabel
+                allDayCell.configure(forViewController: self, with: toDoItem)
                 cell = allDayCell
             case .importance:
                 let importanceCell = SegmentContolCell()
-                setupSegmentControl(importanceCell.segmentControl)
-                importanceCell.label.text = Constants.strings.importanceLabel
+                importanceCell.configure(with: toDoItem)
                 cell = importanceCell
             case .starts:
                 let startCell = DatePickerCell()
-                startCell.textLabel?.text = Constants.strings.startsLabel
-                if let item = toDoItem {
-                    startCell.datePicker.date = item.startDate.date()
-                    if item.isAllDay {
-                        startCell.datePicker.datePickerMode = .date
-                    }
-                } else {
-                    startCell.datePicker.date = Date()
-                }
+                startCell.configure(with: toDoItem, isStartCell: true)
                 cell = startCell
             case .ends:
                 let endCell = DatePickerCell()
-                endCell.textLabel?.text = Constants.strings.endsLabel
-                if let item = toDoItem {
-                    endCell.datePicker.date = item.endDate.date()
-                    if item.isAllDay {
-                        endCell.datePicker.datePickerMode = .date
-                    }
-                } else {
-                    endCell.datePicker.date = Date().addingTimeInterval(Constants.dates.oneHour)
-                }
+                endCell.configure(with: toDoItem, isStartCell: false)
                 cell = endCell
             }
         case .note:
             let noteCell = TextViewCell()
-            noteCell.textView.placeholderLabel.text = Constants.strings.textViewPlaceholder
-            noteCell.textView.delegate = self
-            if let item = toDoItem,
-               let note = item.note,
-               !note.isEmpty {
-                noteCell.textView.placeholderLabel.isHidden = true
-                noteCell.textView.text = note
-            }
-            noteCell.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.layout.textViewMinimumHeight).isActive = true
+            noteCell.configure(forViewController: self, with: toDoItem)
             cell = noteCell
         case .delete:
             let deleteCell = ButtonCell()
-            deleteCell.button.setTitle(Constants.strings.deleteButton, for: .normal)
-            deleteCell.button.setTitleColor(.systemRed, for: .normal)
-            deleteCell.button.addTarget(self,
-                                        action: #selector(didTapDeleteButton),
-                                        for: .touchUpInside)
+            deleteCell.configure(forViewController: self, with: toDoItem)
             cell = deleteCell
         }
         if !(cell is ButtonCell) {
@@ -326,30 +267,6 @@ extension NewItemViewController: UITableViewDataSource {
         return cell
     }
     
-    private func setupSegmentControl(_ segmentControl: UISegmentedControl) {
-        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexZero,
-                                     at: 0,
-                                     animated: true)
-        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexOne,
-                                     at: 1,
-                                     animated: true)
-        segmentControl.insertSegment(withTitle: Constants.strings.segmentControlIndexTwo,
-                                     at: 2,
-                                     animated: true)
-        if let item = toDoItem {
-            switch item.importance {
-            case .high:
-                segmentControl.selectedSegmentIndex = 2
-            case .low:
-                segmentControl.selectedSegmentIndex = 0
-            default:
-                segmentControl.selectedSegmentIndex = 1
-            }
-        } else {
-            segmentControl.selectedSegmentIndex = 1
-        }
-    }
-
     @objc private func textFieldDidChange(_ sender: UITextField) {
         if let text = sender.text,
            !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -359,7 +276,7 @@ extension NewItemViewController: UITableViewDataSource {
         }
     }
     
-    @objc private func switchValueChanged(_ sender: UISwitch) {
+    @objc func switchValueChanged(_ sender: UISwitch) {
         let startCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.startCell) as! DatePickerCell
         let finishCell = newItemView.tableView.cellForRow(at: Constants.indexPaths.endCell) as! DatePickerCell
         
@@ -372,7 +289,7 @@ extension NewItemViewController: UITableViewDataSource {
         }
     }
     
-    @objc private func didTapDeleteButton() {
+    @objc func didTapDeleteButton() {
         guard let item = toDoItem else { return }
         
         let deleteAction = UIAlertAction(title: Constants.strings.deleteAlertActionTitle,
