@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
+        ToDoService.shared = .failValue
+        
         return true
     }
 }

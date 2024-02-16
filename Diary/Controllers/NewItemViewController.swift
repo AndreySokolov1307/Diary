@@ -133,7 +133,7 @@ class NewItemViewController: UIViewController {
                                     note: note,
                                     isAllDay: allDayCell.allDaySwitch.isOn,
                                     importance: importance)
-                ToDoService.shared.save(item: item)
+                ToDoService.shared.save(item)
             }
         } else {
             self.toDoItem = ToDoItem(name: name,
@@ -143,7 +143,7 @@ class NewItemViewController: UIViewController {
                                      isAllDay: allDayCell.allDaySwitch.isOn,
                                      importance: importance )
             dismiss(animated: true) {
-                ToDoService.shared.save(item: self.toDoItem!)
+                ToDoService.shared.save(self.toDoItem!)
             }
         }
     }
@@ -297,7 +297,7 @@ extension NewItemViewController: UITableViewDataSource {
                                          handler: {  [weak self] (_) in
             guard let strongSelf = self else { return }
             strongSelf.dismiss(animated: true) {
-                ToDoService.shared.delete(item: item)
+                ToDoService.shared.delete(item)
             }
         })
         let cancelAction = UIAlertAction(title: Constants.strings.cancelAlertActionTiitle,
