@@ -1,9 +1,15 @@
 import Foundation
 import RealmSwift
 
-class ToDoService {
-    static let shared = ToDoService()
-    
+protocol IToDoService {
+    var calendarView: CalendarView? { get set }
+    func save(item: ToDoItem)
+    func delete(item: ToDoItem)
+    func getAllItems() -> [ToDoItem]
+    func subscribeToCalendarNotifications()
+}
+
+class ToDoService: IToDoService {
     lazy var realm = try! Realm()
     
     var calendarView: CalendarView?
@@ -11,7 +17,7 @@ class ToDoService {
     private var calendarNotificationToken: NotificationToken?
     
     func subscribeToCalendarNotifications() {
-        calendarNotificationToken = ToDoService.shared.realm.observe { [weak self] (_,_) in
+        calendarNotificationToken = realm.observe { [weak self] (_,_) in
             self?.calendarView?.reloadData()
         }
     }

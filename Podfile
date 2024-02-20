@@ -8,5 +8,6 @@ target 'Diary' do
   pod 'RealmSwift'
   pod 'CalendarKit'
   pod 'SnapKit'
+  pod 'Swinject'
 
 end

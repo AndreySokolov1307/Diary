@@ -48,11 +48,13 @@ class NewItemViewController: UIViewController {
     
     private var newItemView: NewItemView!
     private var toDoItem: ToDoItem?
+    private let toDoService: IToDoService
     private lazy var sections = {
         Section.getSections(toDoItem: toDoItem)
     }()
     
-    init(toDoItem: ToDoItem?) {
+    init(toDoItem: ToDoItem?,toDoService: any IToDoService) {
+        self.toDoService = toDoService
         self.toDoItem = toDoItem
         super.init(nibName: nil, bundle: nil)
     }
@@ -133,7 +135,7 @@ class NewItemViewController: UIViewController {
                                     note: note,
                                     isAllDay: allDayCell.allDaySwitch.isOn,
                                     importance: importance)
-                ToDoService.shared.save(item: item)
+                self.toDoService.save(item: item)
             }
         } else {
             self.toDoItem = ToDoItem(name: name,
@@ -143,7 +145,7 @@ class NewItemViewController: UIViewController {
                                      isAllDay: allDayCell.allDaySwitch.isOn,
                                      importance: importance )
             dismiss(animated: true) {
-                ToDoService.shared.save(item: self.toDoItem!)
+                self.toDoService.save(item: self.toDoItem!)
             }
         }
     }
@@ -297,7 +299,7 @@ extension NewItemViewController: UITableViewDataSource {
                                          handler: {  [weak self] (_) in
             guard let strongSelf = self else { return }
             strongSelf.dismiss(animated: true) {
-                ToDoService.shared.delete(item: item)
+                strongSelf.toDoService.delete(item: item)
             }
         })
         let cancelAction = UIAlertAction(title: Constants.strings.cancelAlertActionTiitle,

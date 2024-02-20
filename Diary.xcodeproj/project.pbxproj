@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3185C7C7894C48628868B6C9 /* Pods_Diary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAD4AC018571392D7A70DC7 /* Pods_Diary.framework */; };
+		321D6B432B84E452005ADCCC /* DIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321D6B422B84E452005ADCCC /* DIService.swift */; };
 		32244B9F2B5A995100E9DEEB /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32244B9E2B5A995100E9DEEB /* ToDoService.swift */; };
 		3229D13F2B4ED6F00074624C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D13E2B4ED6F00074624C /* AppDelegate.swift */; };
 		3229D1432B4ED6F00074624C /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3229D1422B4ED6F00074624C /* CalendarViewController.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		321D6B422B84E452005ADCCC /* DIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIService.swift; sourceTree = "<group>"; };
 		32244B9E2B5A995100E9DEEB /* ToDoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 		3229D13B2B4ED6F00074624C /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3229D13E2B4ED6F00074624C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				32244B9E2B5A995100E9DEEB /* ToDoService.swift */,
+				321D6B422B84E452005ADCCC /* DIService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				32244B9F2B5A995100E9DEEB /* ToDoService.swift in Sources */,
 				325CB1822B4FF25B007A1E4A /* ToDoItemEvent.swift in Sources */,
 				325CB1842B4FF26F007A1E4A /* ToDoItem.swift in Sources */,
+				321D6B432B84E452005ADCCC /* DIService.swift in Sources */,
 				325CB1982B5071DF007A1E4A /* DatePickerCell.swift in Sources */,
 				32A4EAEF2B52EBEE00286250 /* ButtonCell.swift in Sources */,
 				325CB18F2B506EEC007A1E4A /* TextFieldCell.swift in Sources */,
