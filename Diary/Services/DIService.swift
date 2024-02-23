@@ -3,6 +3,8 @@ import Swinject
 
 class DIService {
     
+    static let shared = DIService()
+    
     let container = Container()
     
     init() {
