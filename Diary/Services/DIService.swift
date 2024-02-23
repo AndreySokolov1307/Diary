@@ -2,7 +2,6 @@ import Foundation
 import Swinject
 
 class DIService {
-    
     static let shared = DIService()
     
     let container = Container()
@@ -16,8 +15,25 @@ class DIService {
             return ToDoService()
         }
         container.register(CalendarViewController.self) { resolver in
-            let vc = CalendarViewController(toDoService: resolver.resolve(IToDoService.self) as! ToDoService)
-            return vc
+            return CalendarViewController()
+        }
+    }
+}
+
+@propertyWrapper
+struct Dependency<T> {
+    var value: T
+    
+    init() {
+        self.value = DIService.shared.container.resolve(T.self)!
+    }
+    
+    var wrappedValue: T {
+        get {
+            value
+        }
+        set {
+            value = newValue
         }
     }
 }

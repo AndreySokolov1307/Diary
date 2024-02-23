@@ -15,16 +15,7 @@ protocol CalendarView {
 
 class CalendarViewController: DayViewController {
 
-    private var toDoService: IToDoService
-    
-    init(toDoService: ToDoService) {
-        self.toDoService = toDoService
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @Dependency private var toDoService: IToDoService
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +50,7 @@ class CalendarViewController: DayViewController {
     }
     
     @objc func didTapAddNewEventButton() {
-        let controller = NewItemViewController(toDoItem: nil, toDoService: toDoService)
+        let controller = NewItemViewController(toDoItem: nil)
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
     }
@@ -88,7 +79,7 @@ class CalendarViewController: DayViewController {
         guard let ckEvent = eventView.descriptor as? ToDoItemEvent else {
             return
         }
-        let controller = NewItemViewController(toDoItem: ckEvent.todoItem, toDoService: toDoService)
+        let controller = NewItemViewController(toDoItem: ckEvent.todoItem)
         let nav = UINavigationController(rootViewController: controller)
         navigationController?.present(nav, animated: true)
     }

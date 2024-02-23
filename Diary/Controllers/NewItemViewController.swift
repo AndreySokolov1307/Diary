@@ -46,15 +46,14 @@ class NewItemViewController: UIViewController {
         }
     }
     
+    @Dependency private var toDoService: IToDoService
     private var newItemView: NewItemView!
     private var toDoItem: ToDoItem?
-    private let toDoService: IToDoService
     private lazy var sections = {
         Section.getSections(toDoItem: toDoItem)
     }()
     
-    init(toDoItem: ToDoItem?,toDoService: any IToDoService) {
-        self.toDoService = toDoService
+    init(toDoItem: ToDoItem?) {
         self.toDoItem = toDoItem
         super.init(nibName: nil, bundle: nil)
     }
